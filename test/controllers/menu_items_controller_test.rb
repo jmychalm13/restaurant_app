@@ -38,4 +38,11 @@ class MenuItemsControllerTest < ActionDispatch::IntegrationTest
     data = JSON.parse(response.body)
     assert_equal "Updated Menu Item", data["name"]
   end
+
+  test "destroy" do
+    assert_difference "MenuItem.count", -1 do
+      delete "/menu_items/#{MenuItem.first.id}.json"
+      assert_response 200
+    end
+  end
 end

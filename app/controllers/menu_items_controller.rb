@@ -31,4 +31,10 @@ class MenuItemsController < ApplicationController
     )
     render :show
   end
+
+  def destroy
+    @menu_item = MenuItem.find_by(id: params[:id])
+    @menu_item.destroy
+    render json: { message: "Item destroyed successfully" }
+  end
 end
