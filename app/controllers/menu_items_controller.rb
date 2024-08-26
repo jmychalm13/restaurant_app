@@ -19,4 +19,16 @@ class MenuItemsController < ApplicationController
     @menu_item = MenuItem.find_by(id: params[:id])
     render :show
   end
+
+  def update
+    @menu_item = MenuItem.find_by(id: params[:id])
+    @menu_item.update(
+      name: params[:name] || @menu_item.name,
+      description: params[:description] || @menu_item.description,
+      price: params[:price] || @menu_item.price,
+      availability: params[:availability] || @menu_item.availability,
+      category: params[:category] || @menu_item.category,
+    )
+    render :show
+  end
 end

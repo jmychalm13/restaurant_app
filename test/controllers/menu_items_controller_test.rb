@@ -29,4 +29,13 @@ class MenuItemsControllerTest < ActionDispatch::IntegrationTest
     data = JSON.parse(response.body)
     assert_equal ["id", "name", "description", "price", "category", "availability"], data.keys
   end
+
+  test "update" do
+    menu_item = MenuItem.first
+    patch "/menu_items/#{menu_item.id}.json", params: { name: "Updated Menu Item" }
+    assert_response 200
+
+    data = JSON.parse(response.body)
+    assert_equal "Updated Menu Item", data["name"]
+  end
 end
