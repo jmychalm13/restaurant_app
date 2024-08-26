@@ -4,12 +4,12 @@ one:
   name: MyString
   description: MyText
   price: 9.99
-  category: 
+  category: 0
   availability: false
 
 two:
   name: MyString
   description: MyText
   price: 9.99
-  category: 
+  category: 1
   availability: false
