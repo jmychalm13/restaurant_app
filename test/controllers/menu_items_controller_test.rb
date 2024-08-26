@@ -21,4 +21,12 @@ class MenuItemsControllerTest < ActionDispatch::IntegrationTest
       assert_response 200
     end
   end
+
+  test "show" do
+    get "/menu_items/#{MenuItem.first.id}.json"
+    assert_response 200
+
+    data = JSON.parse(response.body)
+    assert_equal ["id", "name", "description", "price", "category", "availability"], data.keys
+  end
 end

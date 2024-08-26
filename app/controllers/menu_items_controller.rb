@@ -14,4 +14,9 @@ class MenuItemsController < ApplicationController
     )
     render :show
   end
+
+  def show
+    @menu_item = MenuItem.find_by(id: params[:id])
+    render :show
+  end
 end
