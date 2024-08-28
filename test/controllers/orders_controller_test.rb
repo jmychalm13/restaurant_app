@@ -65,4 +65,11 @@ class OrdersControllerTest < ActionDispatch::IntegrationTest
     data = JSON.parse(response.body)
     assert_equal "confirmed", data["status"]
   end
+
+  test "destroy" do
+    assert_difference "Order.count", -1 do
+      delete "/orders/#{Order.first.id}.json"
+      assert_response 200
+    end
+  end
 end

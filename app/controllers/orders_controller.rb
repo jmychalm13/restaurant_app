@@ -35,16 +35,15 @@ class OrdersController < ApplicationController
     end
   end
 
+  def destroy
+    @order = Order.find_by(id: params[:id])
+    @order.destroy
+    render json: { message: "Order destroyed successfully" }
+  end
+
   private
 
   def order_update_params
     params.permit(:status, :payment_status)
   end
 end
-# json.id order.id
-# json.customer_email order.customer_email
-# json.status order.status
-# json.customer_name order.customer_name
-# json.total_price order.total_price
-# json.order_date order.order_date
-# json.payment_status order.payment_status
