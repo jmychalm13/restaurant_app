@@ -11,6 +11,15 @@ class OrdersControllerTest < ActionDispatch::IntegrationTest
     post "/sessions.json", params: {email: "jane@test.com", password: "password"}
     data = JSON.parse(response.body)
     @jwt = data["jwt"]
+    @order = Order.create(
+      user_id: @user.id,
+      customer_email: @user.email,
+      status: :pending,
+      customer_name: @user.name,
+      total_price: 9.99,
+      order_date: DateTime.now(),
+      payment_status: false,
+    )
   end
 
   test "index" do
@@ -44,5 +53,16 @@ class OrdersControllerTest < ActionDispatch::IntegrationTest
 
     data = JSON.parse(response.body)
     assert_equal ["id", "user_id", "customer_email", "status", "customer_name", "total_price", "order_date", "payment_status"], data.keys
+  end
+
+  test "update" do
+    patch "/orders/#{@order.id}.json", params: {
+      status: :confirmed
+    }, headers: {
+      "Authorization" => "Bearer #{@jwt}"
+    }
+    assert_response 200
+    data = JSON.parse(response.body)
+    assert_equal "confirmed", data["status"]
   end
 end
