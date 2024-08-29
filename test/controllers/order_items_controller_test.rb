@@ -48,4 +48,12 @@ class OrderItemsControllerTest < ActionDispatch::IntegrationTest
       }
     end
   end
+
+  test "show" do
+    get "/order_items/#{OrderItem.first.id}.json"
+    assert_response 200
+
+    data = JSON.parse(response.body)
+    assert_equal ["id", "order_id", "menu_item_id", "quantity", "unit_price"], data.keys
+  end
 end

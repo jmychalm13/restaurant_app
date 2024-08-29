@@ -17,6 +17,11 @@ class OrderItemsController < ApplicationController
       render json: {errors: @order_item.errors.full_messages}, status: :unprocessable_entity
     end
   end
+
+  def show
+    @order_item = OrderItem.find_by(id: params[:id])
+    render :show
+  end
 end
 
 
