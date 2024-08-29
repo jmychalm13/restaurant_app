@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   resources :orders
 
+  resources :order_items
+
   post "/users" => "users#create"
 
   post "/sessions" => "sessions#create"
