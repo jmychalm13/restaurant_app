@@ -22,6 +22,12 @@ class OrderItemsController < ApplicationController
     @order_item = OrderItem.find_by(id: params[:id])
     render :show
   end
+
+  def destroy
+    @order_item = OrderItem.find_by(id: params[:id])
+    @order_item.destroy
+    render json: { message: "OrderItem destroyed successfully" }
+  end
 end
 
 
