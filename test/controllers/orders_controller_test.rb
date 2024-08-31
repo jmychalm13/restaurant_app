@@ -23,11 +23,12 @@ class OrdersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "index" do
-    get "/orders.json"
+    get "/orders.json", headers: {
+      "Authorization" => "Bearer #{@jwt}"
+    }
     assert_response 200
-
     data = JSON.parse(response.body)
-    assert_equal Order.count, data.length
+    assert_equal @user.orders.count, data.length
   end
 
   test "create" do
