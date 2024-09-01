@@ -20,6 +20,8 @@ class OrdersControllerTest < ActionDispatch::IntegrationTest
       order_date: DateTime.now(),
       payment_status: false,
     )
+    @menu_item = menu_items(:one)
+    pp @menu_item
   end
 
   test "index" do

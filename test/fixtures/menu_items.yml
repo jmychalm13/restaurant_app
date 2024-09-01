@@ -5,7 +5,7 @@ one:
   description: MyText
   price: 9.99
   category: 0
-  availability: false
+  availability: true
 
 two:
   name: MyString
