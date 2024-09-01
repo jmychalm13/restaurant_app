@@ -11,7 +11,7 @@ class OrdersController < ApplicationController
 
   def create
     items = params[:items] || []
-    order = Order.new(
+    @order = Order.new(
       user_id: current_user.id,
       customer_email: current_user.email,
       status: :pending,
@@ -20,17 +20,17 @@ class OrdersController < ApplicationController
       payment_status: false,
     )
 
-    if order.save
+    if @order.save
       items.each do |item|
         OrderItem.create(
-          order_id: order.id,
+          order_id: @order.id,
           menu_item_id: item[:menu_item_id],
           quantity: item[:quantity],
           unit_price: item[:unit_price]
         )
       end
 
-      order.update(total_price: order.calculate_total_price)
+      @order.update(total_price: @order.calculate_total_price)
 
       render :show
     else
