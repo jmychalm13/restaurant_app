@@ -36,12 +36,6 @@ class OrdersControllerTest < ActionDispatch::IntegrationTest
   test "create" do
     assert_difference "Order.count", 1 do
       post "/orders.json", params: {
-        user_id: @user.id,
-        customer_email: @user.email,
-        status: :pending,
-        customer_name: @user.name,
-        order_date: DateTime.now,
-        payment_status: false,
         items: [
           {
             menu_item_id: @menu_item.id, quantity: 2, unit_price: @menu_item.price
@@ -52,21 +46,6 @@ class OrdersControllerTest < ActionDispatch::IntegrationTest
       }
     end
     assert_response 200
-    
-    # assert_difference "Order.count", 1 do
-    #   post "/orders.json", params: {
-    #     user_id: @user.id,
-    #     customer_email: @user.email,
-    #     status: :pending,
-    #     customer_name: @user.name,
-    #     total_price: 9.99,
-    #     order_date: DateTime.now,
-    #     payment_status: false,
-    #   }, headers: {
-    #     "Authorization" => "Bearer #{@jwt}"
-    #   }
-    #   assert_response 200
-    # end
   end
 
   test "show" do

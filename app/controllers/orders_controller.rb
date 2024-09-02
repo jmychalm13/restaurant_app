@@ -11,6 +11,8 @@ class OrdersController < ApplicationController
 
   def create
     items = params[:items] || []
+    pp "Items", items
+
     @order = Order.new(
       user_id: current_user.id,
       customer_email: current_user.email,
@@ -21,36 +23,27 @@ class OrdersController < ApplicationController
     )
 
     if @order.save
+      pp "entering loop"
       items.each do |item|
-        OrderItem.create(
+      pp "loop run"
+        order_item = OrderItem.new(
           order_id: @order.id,
-          menu_item_id: item[:menu_item_id],
-          quantity: item[:quantity],
-          unit_price: item[:unit_price]
+          menu_item_id: item[:menu_item_id].to_i,
+          quantity: item[:quantity].to_i,
+          unit_price: item[:unit_price].to_f
         )
+
+        if order_item.save
+          pp "OrderItem created", order_item.inspect
+        else
+          pp "Failed to create orderItem"
+        end
       end
-
       @order.update(total_price: @order.calculate_total_price)
-
       render :show
     else
-      render json: { errors: order.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @order.errors.full_messages }, status: :unprocessable_entity 
     end
-
-    # @order = Order.create(
-    #   user_id: current_user.id,
-    #   customer_email: current_user.email,
-    #   status: params[:status],
-    #   customer_name: current_user.name,
-    #   total_price: params[:total_price],
-    #   order_date: DateTime.now,
-    #   payment_status: false,
-    # )
-    # if @order.persisted?
-    #   render :show
-    # else
-    #   render json: { errors: @order.errors.full_messages }, status: :unprocessable_entity
-    # end
   end
 
   def show
