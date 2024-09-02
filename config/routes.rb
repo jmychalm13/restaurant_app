@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   resources :order_items
 
-  post "/users" => "users#create"
+  resources :users, only: [:create, :show]
 
   post "/sessions" => "sessions#create"
 end
