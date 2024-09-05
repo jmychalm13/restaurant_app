@@ -23,9 +23,7 @@ class OrdersController < ApplicationController
     )
 
     if @order.save
-      pp "entering loop"
       items.each do |item|
-      pp "loop run"
         order_item = OrderItem.new(
           order_id: @order.id,
           menu_item_id: item[:menu_item_id].to_i,

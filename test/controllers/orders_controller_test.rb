@@ -21,7 +21,6 @@ class OrdersControllerTest < ActionDispatch::IntegrationTest
       payment_status: false,
     )
     @menu_item = menu_items(:one)
-    pp @menu_item
   end
 
   test "index" do
@@ -51,6 +50,7 @@ class OrdersControllerTest < ActionDispatch::IntegrationTest
   test "show" do
     get "/orders/#{Order.first.id}.json"
     assert_response 200
+    pp response.body
 
     data = JSON.parse(response.body)
     assert_equal ["id", "user_id", "customer_email", "status", "customer_name", "total_price", "order_date", "payment_status"], data.keys
